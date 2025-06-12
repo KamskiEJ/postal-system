@@ -1,4 +1,7 @@
 from department import Department
+from client import Client
+from invoice import Invoice
+from product import Product
 
 
 class PostalSystem:
@@ -8,6 +11,12 @@ class PostalSystem:
         self.__clients = []
         self.__products = []
         self.__invoices = []
+        self.Product = Product
+        self.Client = Client
+        self.Department = Department
+        self.Invoice = Invoice
+
+
 
     def add_department(self, name: str, city: str, address: str):
         department = Department(name, city, address)
@@ -15,23 +24,24 @@ class PostalSystem:
         return f"Відділення '{name}' у місті '{city}' додано."
 
     def add_client(self, client_name: str, client_id: str):
-        client_info = {"name": client_name, "id": client_id}
-        self.__clients.append(client_info)
+        client = Client(client_name, client_id)
+        self.__clients.append(client)
         return f"Клієнт '{client_name}' зареєстрований."
 
-    def add_product(self, product_name: str):
-        product_info = {"name": product_name}
-        self.__products.append(product_info)
-        return f"Товар '{product_name}' додано."
+    def add_product(self, name: str, product_id: str, weight: float, sender_id: str, receiver_id: str):
+        product = Product(name, product_id, weight, sender_id, receiver_id)
+        self.__products.append(product)
+        return f"Товар '{name}' додано."
 
-    def create_invoice(self, invoice_number: str, client_id: str, items: list):
-        invoice_info = {
-            "number": invoice_number,
-            "client_id": client_id,
-            "items": items
-        }
-        self.__invoices.append(invoice_info)
-        return f"Накладну №'{invoice_number}' створено."
+    def create_invoice(self, invoice_number: str, sender_id: str, receiver_id: str, items: list):
+        invoice = Invoice(invoice_number, sender_id, receiver_id, items)
+        self.__invoices.append(invoice)
+        return f"Накладну №'{invoice_number}' створено між {sender_id} та {receiver_id}."
+
+    def list_invoices(self):
+        if not self.__invoices:
+            return "Немає накладних у системі."
+        return "\n\n".join([inv.get_summary() for inv in self.__invoices])
 
     def show_statistics(self):
         stats = []
