@@ -1,6 +1,3 @@
-from itertools import product
-
-
 class Product:
     def __init__(self, name: str, product_id: str, weight: float, sender_id: str, receiver_id: str):
         self.name = name
@@ -26,6 +23,3 @@ class Product:
             f"Поточне віділення: {self.current_department if self.current_department else 'Невідоме'}\n"
             f"Статус: {'Доставлено' if self.delivered else 'У дорозі'}"
         )
-product_1 = Product("Ноутбук", "19292D2X2W", 11, "3242DCF4", "D3D43F45F45")
-
-print((product_1.get_summary()))
